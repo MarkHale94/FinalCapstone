@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PharmaQueue.Data;
 using PharmaQueue.Models;
+using PharmaQueue.Models.PrescriptionViewModels;
 
 namespace PharmaQueue.Controllers
 {
@@ -14,10 +17,17 @@ namespace PharmaQueue.Controllers
     {
         private readonly ApplicationDbContext _context;
 
-        public PrescriptionsController(ApplicationDbContext context)
+        private readonly UserManager<ApplicationUser> _userManager;
+
+        private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
+
+        public PrescriptionsController(ApplicationDbContext context,
+                    UserManager<ApplicationUser> userManager)
         {
+            _userManager = userManager;
             _context = context;
         }
+
 
         // GET: Prescriptions
         public async Task<IActionResult> Index()
@@ -44,12 +54,12 @@ namespace PharmaQueue.Controllers
 
             return View(prescription);
         }
-
+        
         // GET: Prescriptions/Create
         public IActionResult Create()
         {
-            ViewData["UserId"] = new SelectList(_context.ApplicationUsers, "Id", "Id");
-            return View();
+            PrescriptionCreateViewModel createViewModel = new PrescriptionCreateViewModel();
+            return View(createViewModel);
         }
 
         // POST: Prescriptions/Create
@@ -57,16 +67,25 @@ namespace PharmaQueue.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PrescriptionId,Name,Strength,Quantity,Refills,Price,IsSold,UserId,PrescriptionStatusId,DateCreated")] Prescription prescription)
+        [Authorize]
+        public async Task<IActionResult> Create(PrescriptionCreateViewModel createPrescription)
         {
+            ModelState.Remove("Prescription.User");
+            ModelState.Remove("Prescription.UserId");
+            ModelState.Remove("Prescription.PrescriptionStatusId");
+            ModelState.Remove("Prescription.Status");
             if (ModelState.IsValid)
             {
-                _context.Add(prescription);
+                createPrescription.Prescription.User = await GetCurrentUserAsync();
+                createPrescription.Prescription.UserId = createPrescription.Prescription.User.Id;
+                createPrescription.Prescription.PrescriptionStatusId = 1;
+                createPrescription.Prescription.IsSold = false;
+                _context.Add(createPrescription.Prescription);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.ApplicationUsers, "Id", "Id", prescription.UserId);
-            return View(prescription);
+
+            return View(createPrescription);
         }
 
         // GET: Prescriptions/Edit/5
