@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -8,7 +9,7 @@ namespace PharmaQueue.Models
 {
     public class Prescription
     {
-        [Required]
+        [Key]
         public int PrescriptionId { get; set; }
 
         [Required]
@@ -24,13 +25,25 @@ namespace PharmaQueue.Models
         public int Refills { get; set; }
 
         [Required]
-        public double price { get; set; }
+        public double Price { get; set; }
 
         [Required]
-        public bool isSold { get; set; }
+        public bool IsSold { get; set; } = false;
 
         [Required]
-        public int UserId { get; set; }
+        public string UserId { get; set; }
 
+        [Required]
+        public int PrescriptionStatusId { get; set; } = 1;
+
+        [Required]
+        [DataType(DataType.Date)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTime DateCreated { get; set; }
+
+        [Required]
+        public ApplicationUser User { get; set; }
+
+        public virtual Status Status { get; set; }
     }
 }
