@@ -8,7 +8,7 @@ namespace PharmaQueue.Models
 {
     public class Status
     {
-        [Required]
+        [Key]
         public int StatusId { get; set; }
 
         [Required]

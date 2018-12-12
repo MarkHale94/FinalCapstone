@@ -8,7 +8,7 @@ namespace PharmaQueue.Models
 {
     public class UserType
     {
-        [Required]
+        [Key]
         public int UserTypeId { get; set; }
 
         [Required]
