@@ -34,7 +34,7 @@ namespace PharmaQueue.Models
         public string UserId { get; set; }
 
         [Required]
-        public int PrescriptionStatusId { get; set; }
+        public int StatusId { get; set; }
 
         [Required]
         [DataType(DataType.Date)]

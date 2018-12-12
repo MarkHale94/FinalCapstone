@@ -72,13 +72,13 @@ namespace PharmaQueue.Controllers
         {
             ModelState.Remove("Prescription.User");
             ModelState.Remove("Prescription.UserId");
-            ModelState.Remove("Prescription.PrescriptionStatusId");
+            ModelState.Remove("Prescription.StatusId");
             ModelState.Remove("Prescription.Status");
             if (ModelState.IsValid)
             {
                 createPrescription.Prescription.User = await GetCurrentUserAsync();
                 createPrescription.Prescription.UserId = createPrescription.Prescription.User.Id;
-                createPrescription.Prescription.PrescriptionStatusId = 1;
+                createPrescription.Prescription.StatusId = 1;
                 createPrescription.Prescription.IsSold = false;
                 _context.Add(createPrescription.Prescription);
                 await _context.SaveChangesAsync();

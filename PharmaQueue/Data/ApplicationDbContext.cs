@@ -93,7 +93,8 @@ namespace PharmaQueue.Data
                      Refills = 4,
                      IsSold = false,
                      Price = 5.00,
-                     UserId=customer.Id
+                     StatusId = 1,
+                     UserId =customer.Id
                  },
                  new Prescription()
                  {
@@ -104,7 +105,7 @@ namespace PharmaQueue.Data
                      Refills = 12,
                      IsSold = false,
                      Price = 30.00,
-                     PrescriptionStatusId = 1,
+                     StatusId = 1,
                      UserId = customer.Id
                  },
                  new Prescription()
@@ -116,7 +117,7 @@ namespace PharmaQueue.Data
                      Refills = 0,
                      IsSold = false,
                      Price = 11.99,
-                     PrescriptionStatusId = 2,
+                     StatusId = 2,
                      UserId = customer.Id
                  },
                  new Prescription()
@@ -128,7 +129,7 @@ namespace PharmaQueue.Data
                      Refills = 2,
                      IsSold = false,
                      Price = 15.00,
-                     PrescriptionStatusId = 4,
+                     StatusId = 4,
                      UserId = customer.Id
                  },
                  new Prescription()
@@ -140,7 +141,7 @@ namespace PharmaQueue.Data
                      Refills = 0,
                      IsSold = false,
                      Price = 200.00,
-                     PrescriptionStatusId = 1,
+                     StatusId = 3,
                      UserId = customer.Id
                  }
              );

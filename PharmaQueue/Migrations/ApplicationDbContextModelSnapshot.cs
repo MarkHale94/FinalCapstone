@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PharmaQueue.Data;
 
-namespace PharmaQueue.Data.Migrations
+namespace PharmaQueue.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -194,8 +194,8 @@ namespace PharmaQueue.Data.Migrations
                     b.ToTable("AspNetUsers");
 
                     b.HasData(
-                        new { Id = "827cafad-2f71-44db-91a9-a23c1be0f038", AccessFailedCount = 0, ConcurrencyStamp = "a506997c-8738-4805-8da2-3d3691fbb265", Email = "admin@admin.com", EmailConfirmed = true, FirstName = "admin", LastName = "admin", LockoutEnabled = false, NormalizedEmail = "ADMIN@ADMIN.COM", NormalizedUserName = "ADMIN@ADMIN.COM", PasswordHash = "AQAAAAEAACcQAAAAEKIG87XSUBs5b9S9ePcG/t+7nxqCyhxj6WGwmqJuP1UahXOvDjX8GvrOL4dYPUmyrQ==", PhoneNumberConfirmed = false, SecurityStamp = "bc9a04b2-fd77-4cc1-b58c-18e31031fff0", TwoFactorEnabled = false, UserName = "admin@admin.com", UserTypeId = 1 },
-                        new { Id = "b4cb0919-77b8-48ad-8603-166c33fde263", AccessFailedCount = 0, ConcurrencyStamp = "353aa89a-d979-457c-8669-2ef4c0df2866", Email = "CUSTOMER@CUSTOEMR.com", EmailConfirmed = true, FirstName = "customer", LastName = "customer", LockoutEnabled = false, NormalizedEmail = "CUSTOMER@CUSTOMER.COM", NormalizedUserName = "CUSTOMER@CUSTOMER.COM", PasswordHash = "AQAAAAEAACcQAAAAEKtG1AexAtrL4yQnxmm+LADKEt7WZvEfJctx5yU+5ZQMjVnnvXcSOWZWPYGMvWdrmg==", PhoneNumberConfirmed = false, SecurityStamp = "3b796eaf-9b4b-4573-8e03-3295a0849cdf", TwoFactorEnabled = false, UserName = "customer@customer.com", UserTypeId = 2 }
+                        new { Id = "9fdbb89a-4796-4be9-829a-44a247b41bca", AccessFailedCount = 0, ConcurrencyStamp = "8621b515-6d80-4e4c-b5da-129ca3129ced", Email = "admin@admin.com", EmailConfirmed = true, FirstName = "admin", LastName = "admin", LockoutEnabled = false, NormalizedEmail = "ADMIN@ADMIN.COM", NormalizedUserName = "ADMIN@ADMIN.COM", PasswordHash = "AQAAAAEAACcQAAAAEHje8UP8yMvuY819/i1/LETVybgqyAN4Gp+sHAkYOzv3UkBtb1Hj+Nya01mqUDy68g==", PhoneNumberConfirmed = false, SecurityStamp = "fcf47b65-0055-4c21-ae66-b5b3ffb06433", TwoFactorEnabled = false, UserName = "admin@admin.com", UserTypeId = 1 },
+                        new { Id = "89babf24-c1c7-4efd-b65e-d34eb417bd43", AccessFailedCount = 0, ConcurrencyStamp = "b7707f0d-86bd-4703-a237-590b3a199f3e", Email = "CUSTOMER@CUSTOEMR.com", EmailConfirmed = true, FirstName = "customer", LastName = "customer", LockoutEnabled = false, NormalizedEmail = "CUSTOMER@CUSTOMER.COM", NormalizedUserName = "CUSTOMER@CUSTOMER.COM", PasswordHash = "AQAAAAEAACcQAAAAEBSBfONC+AKkSAq7Oi1DjRv73o25gfragnjZKntJhr52enmFxfOM+HcItlxLiYBHog==", PhoneNumberConfirmed = false, SecurityStamp = "436eb734-c2d0-40ff-92c5-63b8d039e346", TwoFactorEnabled = false, UserName = "customer@customer.com", UserTypeId = 2 }
                     );
                 });
 
@@ -214,15 +214,13 @@ namespace PharmaQueue.Data.Migrations
                     b.Property<string>("Name")
                         .IsRequired();
 
-                    b.Property<int>("PrescriptionStatusId");
-
                     b.Property<double>("Price");
 
                     b.Property<int>("Quantity");
 
                     b.Property<int>("Refills");
 
-                    b.Property<int?>("StatusId");
+                    b.Property<int>("StatusId");
 
                     b.Property<string>("Strength")
                         .IsRequired();
@@ -239,11 +237,11 @@ namespace PharmaQueue.Data.Migrations
                     b.ToTable("Prescription");
 
                     b.HasData(
-                        new { PrescriptionId = 1, DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), IsSold = false, Name = "Metformin", PrescriptionStatusId = 1, Price = 5.0, Quantity = 120, Refills = 4, Strength = "500mg", UserId = "b4cb0919-77b8-48ad-8603-166c33fde263" },
-                        new { PrescriptionId = 2, DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), IsSold = false, Name = "Glipizide", PrescriptionStatusId = 1, Price = 30.0, Quantity = 30, Refills = 12, Strength = "2.5mg", UserId = "b4cb0919-77b8-48ad-8603-166c33fde263" },
-                        new { PrescriptionId = 3, DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), IsSold = false, Name = "Benzonatate", PrescriptionStatusId = 2, Price = 11.99, Quantity = 20, Refills = 0, Strength = "200mg", UserId = "b4cb0919-77b8-48ad-8603-166c33fde263" },
-                        new { PrescriptionId = 4, DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), IsSold = false, Name = "Hydralazine", PrescriptionStatusId = 4, Price = 15.0, Quantity = 30, Refills = 2, Strength = "25mg", UserId = "b4cb0919-77b8-48ad-8603-166c33fde263" },
-                        new { PrescriptionId = 5, DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), IsSold = false, Name = "Adderall", PrescriptionStatusId = 1, Price = 200.0, Quantity = 60, Refills = 0, Strength = "20mg", UserId = "b4cb0919-77b8-48ad-8603-166c33fde263" }
+                        new { PrescriptionId = 1, DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), IsSold = false, Name = "Metformin", Price = 5.0, Quantity = 120, Refills = 4, StatusId = 1, Strength = "500mg", UserId = "89babf24-c1c7-4efd-b65e-d34eb417bd43" },
+                        new { PrescriptionId = 2, DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), IsSold = false, Name = "Glipizide", Price = 30.0, Quantity = 30, Refills = 12, StatusId = 1, Strength = "2.5mg", UserId = "89babf24-c1c7-4efd-b65e-d34eb417bd43" },
+                        new { PrescriptionId = 3, DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), IsSold = false, Name = "Benzonatate", Price = 11.99, Quantity = 20, Refills = 0, StatusId = 2, Strength = "200mg", UserId = "89babf24-c1c7-4efd-b65e-d34eb417bd43" },
+                        new { PrescriptionId = 4, DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), IsSold = false, Name = "Hydralazine", Price = 15.0, Quantity = 30, Refills = 2, StatusId = 4, Strength = "25mg", UserId = "89babf24-c1c7-4efd-b65e-d34eb417bd43" },
+                        new { PrescriptionId = 5, DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), IsSold = false, Name = "Adderall", Price = 200.0, Quantity = 60, Refills = 0, StatusId = 3, Strength = "20mg", UserId = "89babf24-c1c7-4efd-b65e-d34eb417bd43" }
                     );
                 });
 
@@ -344,7 +342,8 @@ namespace PharmaQueue.Data.Migrations
                 {
                     b.HasOne("PharmaQueue.Models.Status", "Status")
                         .WithMany()
-                        .HasForeignKey("StatusId");
+                        .HasForeignKey("StatusId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("PharmaQueue.Models.ApplicationUser", "User")
                         .WithMany("Prescriptions")
