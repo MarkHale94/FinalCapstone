@@ -6,9 +6,6 @@
 
 <h2>Index</h2>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -68,7 +65,9 @@
             <td>
                 <a asp-action="Edit" asp-route-id="@item.PrescriptionId">Edit</a>
                 @if (item.StatusId==1) {
-                <a asp-action="Delete" asp-route-id="@item.PrescriptionId">| Delete</a>
+                <form asp-controller="Prescriptions" asp-action="Delete" asp-route-id="@item.PrescriptionId">
+                    <input type="submit" class="btn btn-danger btn-sm" value="Delete" />
+                </form>
                 }
             </td>
         </tr>
