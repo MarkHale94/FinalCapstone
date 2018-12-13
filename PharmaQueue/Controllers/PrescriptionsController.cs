@@ -83,7 +83,9 @@ namespace PharmaQueue.Controllers
             var user = await GetCurrentUserAsync();
             var customer = await _context.Users.FirstOrDefaultAsync(u => u.Id == createPrescription.UserId);
             if (user.UserTypeId != 1)
-            { return RedirectToAction(nameof(Index)); }
+            {
+                return RedirectToAction(nameof(Index));
+            }
 
             ModelState.Remove("Prescription.User");
             ModelState.Remove("Prescription.UserId");
@@ -101,6 +103,30 @@ namespace PharmaQueue.Controllers
             }
 
             return View(createPrescription);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var user = await GetCurrentUserAsync();
+            var prescription = await _context.Prescription
+                .Include(p => p.User)
+                .FirstOrDefaultAsync(p => p.PrescriptionId == id);
+            if (user.UserTypeId!=1 || prescription.StatusId!=1)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            _context.Prescription.Remove(prescription);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index", "Prescriptions");
         }
 
         // GET: Prescriptions/Edit/5
@@ -154,36 +180,6 @@ namespace PharmaQueue.Controllers
             }
             ViewData["UserId"] = new SelectList(_context.ApplicationUsers, "Id", "Id", prescription.UserId);
             return View(prescription);
-        }
-
-        // GET: Prescriptions/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var prescription = await _context.Prescription
-                .Include(p => p.User)
-                .FirstOrDefaultAsync(m => m.PrescriptionId == id);
-            if (prescription == null)
-            {
-                return NotFound();
-            }
-
-            return View(prescription);
-        }
-
-        // POST: Prescriptions/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var prescription = await _context.Prescription.FindAsync(id);
-            _context.Prescription.Remove(prescription);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
         }
 
         private bool PrescriptionExists(int id)

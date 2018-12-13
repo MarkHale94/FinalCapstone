@@ -23,16 +23,18 @@
         @foreach (var item in Model.Prescriptions)
 
         {
-            <dd>
-                Medication: @Html.DisplayFor(modelItem => item.Name)
-                @Html.DisplayFor(modelItem => item.Strength)
-                #@Html.DisplayFor(modelItem => item.Quantity)
-            </dd>
+        <dd>
+            Medication: @Html.DisplayFor(modelItem => item.Name)
+            @Html.DisplayFor(modelItem => item.Strength)
+            #@Html.DisplayFor(modelItem => item.Quantity)
+            @if (item.StatusId == 1)
+            {
+            <form asp-controller="Prescriptions" asp-action="Delete" asp-route-id="@item.PrescriptionId">
+                <input type="submit" class="btn btn-danger btn-sm" value="Delete" />
+            </form>
+            }
+        </dd>
         }
     </dl>
     <a asp-controller="Prescriptions" asp-action="Create" asp-route-id="@Model.UserId">Add a Prescription</a>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.UserId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
 </div>
