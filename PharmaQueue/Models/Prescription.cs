@@ -28,13 +28,13 @@ namespace PharmaQueue.Models
         public double Price { get; set; }
 
         [Required]
-        public bool IsSold { get; set; } = false;
+        public bool IsSold { get; set; }
 
         [Required]
         public string UserId { get; set; }
 
         [Required]
-        public int PrescriptionStatusId { get; set; } = 1;
+        public int StatusId { get; set; }
 
         [Required]
         [DataType(DataType.Date)]
