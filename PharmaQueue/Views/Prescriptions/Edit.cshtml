@@ -1,4 +1,4 @@
-﻿@model PharmaQueue.Models.Prescription
+﻿@model PharmaQueue.Models.PrescriptionViewModels.PrescriptionEditViewModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -12,49 +12,54 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="PrescriptionId" />
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Strength" class="control-label"></label>
-                <input asp-for="Strength" class="form-control" />
-                <span asp-validation-for="Strength" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Quantity" class="control-label"></label>
-                <input asp-for="Quantity" class="form-control" />
-                <span asp-validation-for="Quantity" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Refills" class="control-label"></label>
-                <input asp-for="Refills" class="form-control" />
-                <span asp-validation-for="Refills" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Price" class="control-label"></label>
-                <input asp-for="Price" class="form-control" />
-                <span asp-validation-for="Price" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <div class="checkbox">
-                    <label>
-                        <input asp-for="IsSold" /> @Html.DisplayNameFor(model => model.IsSold)
-                    </label>
+            <input type="hidden" asp-for="@Model.Prescription.PrescriptionId" />
+            <input type="hidden" asp-for="@Model.Prescription.User" />
+            <input type="hidden" asp-for="@Model.Prescription.UserId" />
+            <input type="hidden" asp-for="@Model.Prescription.Status" />
+            <input type="hidden" asp-for="@Model.Prescription.StatusId" />
+            @if (Model.Prescription.StatusId <= 2)
+            {
+                <div class="form-group">
+                    <label asp-for="Prescription.Name" class="control-label"></label>
+                    <input asp-for="Prescription.Name" class="form-control" />
+                    <span asp-validation-for="Prescription.Name" class="text-danger"></span>
                 </div>
-            </div>
-            <div class="form-group">
-                <label asp-for="UserId" class="control-label"></label>
-                <select asp-for="UserId" class="form-control" asp-items="ViewBag.UserId"></select>
-                <span asp-validation-for="UserId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="StatusId" class="control-label"></label>
-                <input asp-for="StatusId" class="form-control" />
-                <span asp-validation-for="StatusId" class="text-danger"></span>
-            </div>
+                <div class="form-group">
+                    <label asp-for="Prescription.Strength" class="control-label"></label>
+                    <input asp-for="Prescription.Strength" class="form-control" />
+                    <span asp-validation-for="Prescription.Strength" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Prescription.Quantity" class="control-label"></label>
+                    <input asp-for="Prescription.Quantity" class="form-control" />
+                    <span asp-validation-for="Prescription.Quantity" class="text-danger"></span>
+                </div>
+            }
+            @if (Model.Prescription.StatusId > 2)
+            {
+                <input type="hidden" asp-for="@Model.Prescription.Name" />
+                <input type="hidden" asp-for="@Model.Prescription.Strength" />
+                <input type="hidden" asp-for="@Model.Prescription.Refills" />
+                <input type="hidden" asp-for="@Model.Prescription.Price" />
+                <div class="form-group">
+                    <label asp-for="Prescription.Quantity" class="control-label"></label>
+                    <input asp-for="Prescription.Quantity" class="form-control" />
+                    <span asp-validation-for="Prescription.Quantity" class="text-danger"></span>
+                </div>
+            }
+            @if (Model.Prescription.StatusId <= 2)
+            {
+                <div class="form-group">
+                    <label asp-for="Prescription.Refills" class="control-label"></label>
+                    <input asp-for="Prescription.Refills" class="form-control" />
+                    <span asp-validation-for="Prescription.Refills" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Prescription.Price" class="control-label"></label>
+                    <input asp-for="Prescription.Price" class="form-control" />
+                    <span asp-validation-for="Prescription.Price" class="text-danger"></span>
+                </div>
+            }
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-default" />
             </div>

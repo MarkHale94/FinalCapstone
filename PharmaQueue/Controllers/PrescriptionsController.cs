@@ -57,7 +57,7 @@ namespace PharmaQueue.Controllers
 
             return View(prescription);
         }
-        
+
         // GET: Prescriptions/Create
         public async Task<IActionResult> Create()
         {
@@ -119,7 +119,7 @@ namespace PharmaQueue.Controllers
             var prescription = await _context.Prescription
                 .Include(p => p.User)
                 .FirstOrDefaultAsync(p => p.PrescriptionId == id);
-            if (user.UserTypeId!=1 || prescription.StatusId!=1)
+            if (user.UserTypeId != 1 || prescription.StatusId != 1)
             {
                 return RedirectToAction(nameof(Index));
             }
@@ -132,18 +132,26 @@ namespace PharmaQueue.Controllers
         // GET: Prescriptions/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            var user = await GetCurrentUserAsync();
+            if (user.UserTypeId != 1)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             if (id == null)
             {
                 return NotFound();
             }
-
-            var prescription = await _context.Prescription.FindAsync(id);
+            var viewModel = new PrescriptionEditViewModel();
+            var prescription = await _context.Prescription
+                .Include(p => p.Status)
+                .Include(p => p.User)
+                .SingleOrDefaultAsync(p => p.PrescriptionId == id);
             if (prescription == null)
             {
                 return NotFound();
             }
-            ViewData["UserId"] = new SelectList(_context.ApplicationUsers, "Id", "Id", prescription.UserId);
-            return View(prescription);
+            viewModel.Prescription = prescription;
+            return View(viewModel);
         }
 
         // POST: Prescriptions/Edit/5
@@ -151,35 +159,11 @@ namespace PharmaQueue.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("PrescriptionId,Name,Strength,Quantity,Refills,Price,IsSold,UserId,PrescriptionStatusId,DateCreated")] Prescription prescription)
+        public async Task<IActionResult> Edit(int id, PrescriptionEditViewModel viewModel)
         {
-            if (id != prescription.PrescriptionId)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(prescription);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!PrescriptionExists(prescription.PrescriptionId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["UserId"] = new SelectList(_context.ApplicationUsers, "Id", "Id", prescription.UserId);
-            return View(prescription);
+            _context.Update(viewModel.Prescription);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
 
         private bool PrescriptionExists(int id)
