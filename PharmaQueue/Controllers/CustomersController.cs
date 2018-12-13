@@ -66,7 +66,7 @@ namespace PharmaQueue.Controllers
             CustomerSearchViewModel viewModel = new CustomerSearchViewModel();
 
             viewModel.Search = search;
-            var Customers = await _context.Users.Where(u=>u.LastName.Contains(search)).ToListAsync();
+            var Customers = await _context.Users.Where(u=>u.LastName.Contains(search) && u.UserTypeId!=1).ToListAsync();
             List<Customer> customerList = new List<Customer>();
             foreach (var customer in Customers)
             {
