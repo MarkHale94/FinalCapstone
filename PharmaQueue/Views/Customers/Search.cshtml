@@ -1,0 +1,45 @@
+﻿@model PharmaQueue.Models.CustomerViewModels.CustomerSearchViewModel
+
+@{
+    ViewData["Title"] = "Search";
+}
+
+<h2>Search Results for "@Model.Search"</h2>
+<hr />
+<p>Showing all customers with last names related to "@Model.Search"</p>
+<hr />
+@if (Model.Customers.Count() == 0)
+{
+    <p>No Customers match "@Model.Search"</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="col-md-2">
+                    First Name
+                </th>
+                <th class="col-md-4">
+                    Last Name
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Customers)
+            {
+                <tr>
+                    <td class="col-md-2">
+                        <a asp-controller="Customers" asp-action="Details" asp-route-id="@item.UserId">Details</a>
+                    </td>
+                    <td class="col-md-4">
+                        @Html.DisplayFor(modelItem => item.FirstName)
+                    </td>
+                    <td class="col-md-2">
+                        @item.LastName
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
