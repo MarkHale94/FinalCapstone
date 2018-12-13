@@ -5,7 +5,9 @@
 }
 
 <div class="container-fluid">
-    <h2>Welcome to Bangazon!</h2>
+    <h2>Welcome to PharmaQueue!</h2>
+    @if (Model != null)
+    {
     <div class="row" style="overflow: hidden">
         @foreach (var item in Model)
         {
@@ -17,4 +19,11 @@
             </div>
         }
     </div>
+    }
+    @if (Model == null)
+    {
+        <div>
+            <h3>You are not authorized to view this page</h3>
+        </div>
+    }
 </div>
