@@ -66,9 +66,10 @@
                 @Html.DisplayFor(modelItem => item.User.LastName)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.PrescriptionId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.PrescriptionId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.PrescriptionId">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.PrescriptionId">Edit</a>
+                @if (item.StatusId==1) {
+                <a asp-action="Delete" asp-route-id="@item.PrescriptionId">| Delete</a>
+                }
             </td>
         </tr>
 }

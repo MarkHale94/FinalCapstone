@@ -23,11 +23,15 @@
         @foreach (var item in Model.Prescriptions)
 
         {
-            <dd>
-                Medication: @Html.DisplayFor(modelItem => item.Name)
-                @Html.DisplayFor(modelItem => item.Strength)
-                #@Html.DisplayFor(modelItem => item.Quantity)
-            </dd>
+        <dd>
+            Medication: @Html.DisplayFor(modelItem => item.Name)
+            @Html.DisplayFor(modelItem => item.Strength)
+            #@Html.DisplayFor(modelItem => item.Quantity)
+            @if (item.StatusId == 1)
+            {
+                <a asp-controller="Prescriptions" asp-action="Delete" asp-route-id="@item.PrescriptionId">| Delete</a>
+            }
+        </dd>
         }
     </dl>
     <a asp-controller="Prescriptions" asp-action="Create" asp-route-id="@Model.UserId">Add a Prescription</a>
