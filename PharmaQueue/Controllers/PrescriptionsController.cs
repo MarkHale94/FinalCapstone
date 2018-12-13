@@ -32,7 +32,9 @@ namespace PharmaQueue.Controllers
         // GET: Prescriptions
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Prescription.Include(p => p.User);
+            var applicationDbContext = _context.Prescription
+                .Include(p => p.User)
+                .Include(p => p.Status);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -46,6 +48,7 @@ namespace PharmaQueue.Controllers
 
             var prescription = await _context.Prescription
                 .Include(p => p.User)
+                .Include(p => p.Status)
                 .FirstOrDefaultAsync(m => m.PrescriptionId == id);
             if (prescription == null)
             {
@@ -69,15 +72,18 @@ namespace PharmaQueue.Controllers
         [ValidateAntiForgeryToken]
         [Authorize]
         public async Task<IActionResult> Create(PrescriptionCreateViewModel createPrescription)
-        {
+        { var user = await GetCurrentUserAsync();
+            if (user.UserTypeId != 1)
+            { return RedirectToAction(nameof(Index)); }
+
             ModelState.Remove("Prescription.User");
             ModelState.Remove("Prescription.UserId");
             ModelState.Remove("Prescription.StatusId");
             ModelState.Remove("Prescription.Status");
             if (ModelState.IsValid)
             {
-                createPrescription.Prescription.User = await GetCurrentUserAsync();
-                createPrescription.Prescription.UserId = createPrescription.Prescription.User.Id;
+                createPrescription.Prescription.User = user;
+                createPrescription.Prescription.UserId = user.Id;
                 createPrescription.Prescription.StatusId = 1;
                 createPrescription.Prescription.IsSold = false;
                 _context.Add(createPrescription.Prescription);

@@ -28,18 +28,13 @@
                 @Html.DisplayNameFor(model => model.Price)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IsSold)
+                @Html.DisplayNameFor(model => model.Status)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.StatusId)
-            </th>
+            
             <th>
                 @Html.DisplayNameFor(model => model.DateCreated)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.User)
-            </th>
-            <th></th>
+            <th>Name</th>
         </tr>
     </thead>
     <tbody>
@@ -61,16 +56,14 @@
                 @Html.DisplayFor(modelItem => item.Price)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IsSold)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StatusId)
+                @Html.DisplayFor(modelItem => item.Status.QueueStatus)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DateCreated)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.User.Id)
+                @Html.DisplayFor(modelItem => item.User.FirstName)
+                @Html.DisplayFor(modelItem => item.User.LastName)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.PrescriptionId">Edit</a> |

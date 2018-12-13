@@ -41,13 +41,7 @@
             @Html.DisplayFor(model => model.Price)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.IsSold)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.IsSold)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.StatusId)
+            @Html.DisplayNameFor(model => model.Status.QueueStatus)
         </dt>
         <dd>
             @Html.DisplayFor(model => model.StatusId)
@@ -62,7 +56,8 @@
             @Html.DisplayNameFor(model => model.User)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.User.Id)
+            @Html.DisplayFor(model => model.User.FirstName)
+            @Html.DisplayFor(model => model.User.LastName)
         </dd>
     </dl>
 </div>
