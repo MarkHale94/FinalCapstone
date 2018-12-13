@@ -25,11 +25,12 @@
         {
             <dd>
                 Medication: @Html.DisplayFor(modelItem => item.Name)
-                @Html.DisplayFor(modelItem => item.Strength)   
+                @Html.DisplayFor(modelItem => item.Strength)
                 #@Html.DisplayFor(modelItem => item.Quantity)
             </dd>
         }
     </dl>
+    <a asp-controller="Prescriptions" asp-action="Create" asp-route-id="@Model.UserId">Add a Prescription</a>
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.UserId">Edit</a> |

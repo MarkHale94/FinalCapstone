@@ -62,6 +62,7 @@ namespace PharmaQueue.Controllers
         public IActionResult Create()
         {
             PrescriptionCreateViewModel createViewModel = new PrescriptionCreateViewModel();
+            createViewModel.UserId = this.RouteData.Values.Values.LastOrDefault().ToString();
             return View(createViewModel);
         }
 
@@ -72,7 +73,10 @@ namespace PharmaQueue.Controllers
         [ValidateAntiForgeryToken]
         [Authorize]
         public async Task<IActionResult> Create(PrescriptionCreateViewModel createPrescription)
-        { var user = await GetCurrentUserAsync();
+        {
+            createPrescription.UserId = this.RouteData.Values.Values.LastOrDefault().ToString();
+            var user = await GetCurrentUserAsync();
+            var customer = await _context.Users.FirstOrDefaultAsync(u => u.Id == createPrescription.UserId);
             if (user.UserTypeId != 1)
             { return RedirectToAction(nameof(Index)); }
 
@@ -82,8 +86,8 @@ namespace PharmaQueue.Controllers
             ModelState.Remove("Prescription.Status");
             if (ModelState.IsValid)
             {
-                createPrescription.Prescription.User = user;
-                createPrescription.Prescription.UserId = user.Id;
+                createPrescription.Prescription.User = customer;
+                createPrescription.Prescription.UserId = createPrescription.UserId;
                 createPrescription.Prescription.StatusId = 1;
                 createPrescription.Prescription.IsSold = false;
                 _context.Add(createPrescription.Prescription);
