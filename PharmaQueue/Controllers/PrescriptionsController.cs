@@ -59,8 +59,13 @@ namespace PharmaQueue.Controllers
         }
         
         // GET: Prescriptions/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            var user = await GetCurrentUserAsync();
+            if (user.UserTypeId != 1)
+            {
+                return RedirectToAction(nameof(Index));
+            }
             PrescriptionCreateViewModel createViewModel = new PrescriptionCreateViewModel();
             createViewModel.UserId = this.RouteData.Values.Values.LastOrDefault().ToString();
             return View(createViewModel);
