@@ -7,6 +7,7 @@ namespace PharmaQueue.Models.HomeViewModel
 {
     public class HomeIndexViewModel
     {
+        public int UserTypeId { get; set; }
         public ICollection<Prescription> EnteredPrescriptions { get; set; }
         public ICollection<Prescription> ReviewedPrescriptions { get; set; }
         public ICollection<Prescription> FilledPrescriptions { get; set; }

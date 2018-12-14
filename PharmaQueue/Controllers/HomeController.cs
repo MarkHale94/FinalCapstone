@@ -38,6 +38,7 @@ namespace PharmaQueue.Controllers
                         .Where(p => p.UserId == user.Id)
                         .ToListAsync();
                 var viewModel = new HomeIndexViewModel();
+                viewModel.UserTypeId = user.UserTypeId;
                 viewModel.EnteredPrescriptions = currentPrescriptions.Where(p=>p.StatusId == 1).ToList();
                 viewModel.ReviewedPrescriptions = currentPrescriptions.Where(p => p.StatusId == 2).ToList();
                 viewModel.FilledPrescriptions = currentPrescriptions.Where(p => p.StatusId == 3).ToList();
@@ -50,9 +51,9 @@ namespace PharmaQueue.Controllers
                 var currentPrescriptions = await _context.Prescription
                         .Include(p => p.User)
                         .Include(p => p.Status)
-                        .Where(p => p.IsSold == false)
                         .ToListAsync();
                 var viewModel = new HomeIndexViewModel();
+                viewModel.UserTypeId = user.UserTypeId;
                 viewModel.EnteredPrescriptions = currentPrescriptions.Where(p => p.StatusId == 1).ToList();
                 viewModel.ReviewedPrescriptions = currentPrescriptions.Where(p => p.StatusId == 2).ToList();
                 viewModel.FilledPrescriptions = currentPrescriptions.Where(p => p.StatusId == 3).ToList();

@@ -6,11 +6,18 @@
 
 <div class="container-fluid">
     <h2>Welcome to PharmaQueue!</h2>
+    @if (Model.UserTypeId == 1)
+    {
+        <form asp-controller="Customers" asp-action="Search" method="get" class="nav-search">
+            <input type="text" name="search" class="input-sm" placeholder="Search By Last Name" />
+        </form>
+        <br>
+    }
     @if (Model.SoldPrescriptions.Count > 0)
     {
-    <a class="btn btn-xs btn-danger" asp-controller="Prescriptions" asp-action="Sold" style="float:left">Sold</a>
-    <br>
-    <br>
+        <a class="btn btn-xs btn-danger" asp-controller="Prescriptions" asp-action="Sold" style="float:left">Sold</a>
+        <br>
+        <br>
     }
     <table style="width:25%; float:left">
         <tr>
