@@ -30,15 +30,26 @@ namespace PharmaQueue.Controllers
 
 
         // GET: Prescriptions
+        [Authorize]
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Prescription
-                .Include(p => p.User)
-                .Include(p => p.Status);
-            return View(await applicationDbContext.ToListAsync());
+            var user = await GetCurrentUserAsync();
+            if (user.UserTypeId!=1) {
+                var prescriptions = _context.Prescription
+                    .Include(p => p.User)
+                    .Include(p => p.Status)
+                    .Where(p => p.UserId == user.Id)
+                    .ToListAsync();
+                return View(await prescriptions);
+            }
+            var prescriptionsForEmployees = _context.Prescription
+                    .Include(p => p.User)
+                    .Include(p => p.Status);
+            return View(await prescriptionsForEmployees.ToListAsync());
         }
 
         // GET: Prescriptions/Details/5
+        [Authorize]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -59,6 +70,7 @@ namespace PharmaQueue.Controllers
         }
 
         // GET: Prescriptions/Create
+        [Authorize]
         public async Task<IActionResult> Create()
         {
             var user = await GetCurrentUserAsync();
@@ -104,7 +116,7 @@ namespace PharmaQueue.Controllers
 
             return View(createPrescription);
         }
-
+        //Delete
         [HttpPost, ActionName("Delete")]
         [Authorize]
         [ValidateAntiForgeryToken]
@@ -130,6 +142,7 @@ namespace PharmaQueue.Controllers
         }
 
         // GET: Prescriptions/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             var user = await GetCurrentUserAsync();
@@ -159,6 +172,7 @@ namespace PharmaQueue.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Edit(int id, PrescriptionEditViewModel viewModel)
         {
             _context.Update(viewModel.Prescription);
@@ -169,6 +183,7 @@ namespace PharmaQueue.Controllers
         // POST: Precriptions/Update/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Update(int? id)
         {
             var user = await GetCurrentUserAsync();
