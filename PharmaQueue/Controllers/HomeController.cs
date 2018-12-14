@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PharmaQueue.Data;
 using PharmaQueue.Models;
+using PharmaQueue.Models.HomeViewModel;
 
 namespace PharmaQueue.Controllers
 {
@@ -25,16 +26,37 @@ namespace PharmaQueue.Controllers
         }
         private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
 
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             var user = await GetCurrentUserAsync();
             if (user == null || user.UserTypeId==2)
             {
-               return View();
+                var currentPrescriptions = await _context.Prescription
+                        .Include(p => p.User)
+                        .Include(p => p.Status)
+                        .Where(p => p.UserId == user.Id && p.IsSold == false)
+                        .ToListAsync();
+                var viewModel = new HomeIndexViewModel();
+                viewModel.EnteredPrescriptions = currentPrescriptions.Where(p=>p.StatusId == 1).ToList();
+                viewModel.ReviewedPrescriptions = currentPrescriptions.Where(p => p.StatusId == 2).ToList();
+                viewModel.FilledPrescriptions = currentPrescriptions.Where(p => p.StatusId == 3).ToList();
+                viewModel.ReadyPrescriptions = currentPrescriptions.Where(p => p.StatusId == 4).ToList();
+                return View(viewModel);
             }
             else
             {
-                return View(await _context.Users.Where(u => u.UserTypeId == 2).ToListAsync());
+                var currentPrescriptions = await _context.Prescription
+                        .Include(p => p.User)
+                        .Include(p => p.Status)
+                        .Where(p => p.IsSold == false)
+                        .ToListAsync();
+                var viewModel = new HomeIndexViewModel();
+                viewModel.EnteredPrescriptions = currentPrescriptions.Where(p => p.StatusId == 1).ToList();
+                viewModel.ReviewedPrescriptions = currentPrescriptions.Where(p => p.StatusId == 2).ToList();
+                viewModel.FilledPrescriptions = currentPrescriptions.Where(p => p.StatusId == 3).ToList();
+                viewModel.ReadyPrescriptions = currentPrescriptions.Where(p => p.StatusId == 4).ToList();
+                return View(viewModel);
             }
         }
 
