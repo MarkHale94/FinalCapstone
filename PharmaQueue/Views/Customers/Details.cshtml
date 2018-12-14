@@ -29,16 +29,16 @@
             #@Html.DisplayFor(modelItem => item.Quantity)
             @if (item.StatusId != 4)
             {
-                <a asp-controller="Prescriptions" asp-action="Edit" asp-route-id="@item.PrescriptionId">Edit</a>
+                <a class="btn btn-danger btn-xs" asp-controller="Prescriptions" asp-action="Edit" asp-route-id="@item.PrescriptionId">Edit</a>
             }
             @if (item.StatusId == 1)
             {
                 <form asp-controller="Prescriptions" asp-action="Delete" asp-route-id="@item.PrescriptionId">
-                    <input type="submit" class="btn btn-danger btn-sm" value="Delete" />
+                    <input type="submit" class="btn btn-danger btn-xs" value="Delete" />
                 </form>
             }
         </dd>
         }
     </dl>
-    <a asp-controller="Prescriptions" asp-action="Create" asp-route-id="@Model.UserId">Add a Prescription</a>
+    <a class="btn btn-danger btn-xs" asp-controller="Prescriptions" asp-action="Create" asp-route-id="@Model.UserId">Add a Prescription</a>
 </div>
