@@ -245,6 +245,34 @@ namespace PharmaQueue.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        //Sold
+        [Authorize]
+        public async Task<IActionResult> Sold()
+        {
+            var user = await GetCurrentUserAsync();
+            if (user.UserTypeId != 1)
+            {
+                var prescriptions = _context.Prescription
+                    .Include(p => p.User)
+                    .Include(p => p.Status)
+                    .Where(p => p.UserId == user.Id && p.StatusId==4 &&p.IsSold==true)
+                    .ToListAsync();
+                var viewModelForCustomers = new PrescriptionSoldViewModel();
+                viewModelForCustomers.Prescriptions = await prescriptions;
+                viewModelForCustomers.CurrentUserTypeId = user.UserTypeId;
+                return View(viewModelForCustomers);
+            }
+            var prescriptionsForEmployees = _context.Prescription
+                    .Include(p => p.User)
+                    .Include(p => p.Status)
+                    .Where(p => p.StatusId == 4 && p.IsSold == true)
+                    .ToListAsync();
+            var viewModelForEmployees = new PrescriptionSoldViewModel();
+            viewModelForEmployees.Prescriptions = await prescriptionsForEmployees;
+            viewModelForEmployees.CurrentUserTypeId = user.UserTypeId;
+            return View(viewModelForEmployees);
+        }
+
         private bool PrescriptionExists(int id)
         {
             return _context.Prescription.Any(e => e.PrescriptionId == id);

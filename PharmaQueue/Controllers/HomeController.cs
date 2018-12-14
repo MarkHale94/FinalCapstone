@@ -35,13 +35,15 @@ namespace PharmaQueue.Controllers
                 var currentPrescriptions = await _context.Prescription
                         .Include(p => p.User)
                         .Include(p => p.Status)
-                        .Where(p => p.UserId == user.Id && p.IsSold == false)
+                        .Where(p => p.UserId == user.Id)
                         .ToListAsync();
                 var viewModel = new HomeIndexViewModel();
+                viewModel.UserTypeId = user.UserTypeId;
                 viewModel.EnteredPrescriptions = currentPrescriptions.Where(p=>p.StatusId == 1).ToList();
                 viewModel.ReviewedPrescriptions = currentPrescriptions.Where(p => p.StatusId == 2).ToList();
                 viewModel.FilledPrescriptions = currentPrescriptions.Where(p => p.StatusId == 3).ToList();
-                viewModel.ReadyPrescriptions = currentPrescriptions.Where(p => p.StatusId == 4).ToList();
+                viewModel.ReadyPrescriptions = currentPrescriptions.Where(p => p.StatusId == 4 && p.IsSold == false).ToList();
+                viewModel.SoldPrescriptions = currentPrescriptions.Where(p => p.StatusId == 4 && p.IsSold == true).ToList();
                 return View(viewModel);
             }
             else
@@ -49,13 +51,14 @@ namespace PharmaQueue.Controllers
                 var currentPrescriptions = await _context.Prescription
                         .Include(p => p.User)
                         .Include(p => p.Status)
-                        .Where(p => p.IsSold == false)
                         .ToListAsync();
                 var viewModel = new HomeIndexViewModel();
+                viewModel.UserTypeId = user.UserTypeId;
                 viewModel.EnteredPrescriptions = currentPrescriptions.Where(p => p.StatusId == 1).ToList();
                 viewModel.ReviewedPrescriptions = currentPrescriptions.Where(p => p.StatusId == 2).ToList();
                 viewModel.FilledPrescriptions = currentPrescriptions.Where(p => p.StatusId == 3).ToList();
                 viewModel.ReadyPrescriptions = currentPrescriptions.Where(p => p.StatusId == 4).ToList();
+                viewModel.SoldPrescriptions = currentPrescriptions.Where(p => p.StatusId == 4 && p.IsSold == true).ToList();
                 return View(viewModel);
             }
         }

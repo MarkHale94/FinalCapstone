@@ -6,92 +6,118 @@
 
 <div class="container-fluid">
     <h2>Welcome to PharmaQueue!</h2>
-        <table style="width:25%; float:left">
-            <tr>
-                <th>Entered</th>
-            </tr>
-            @if (Model.EnteredPrescriptions.Count() > 0)
-            {
-                @foreach (var item in Model.EnteredPrescriptions)
-                {
-                    <tr>
-                        <td>
-                            @item.Name @item.Strength #@item.Quantity $@item.Price
-                        </td>
-                    </tr>
-                }
-            }
-            @if (Model.EnteredPrescriptions.Count() == 0)
+    @if (Model.UserTypeId == 1)
+    {
+        <form asp-controller="Customers" asp-action="Search" method="get" class="nav-search">
+            <input type="text" name="search" class="input-sm" placeholder="Search By Last Name" />
+        </form>
+        <br>
+    }
+    @if (Model.SoldPrescriptions.Count > 0)
+    {
+        <a class="btn btn-xs btn-danger" asp-controller="Prescriptions" asp-action="Sold" style="float:left">Sold</a>
+        <br>
+        <br>
+    }
+    <table style="width:25%; float:left">
+        <tr>
+            <th>Entered</th>
+        </tr>
+        @if (Model.EnteredPrescriptions.Count() > 0)
+        {
+            @foreach (var item in Model.EnteredPrescriptions)
             {
                 <tr>
-                    <td></td>
+                    <td>
+                        <a asp-controller="Prescriptions" asp-action="Details" asp-route-id="@item.PrescriptionId" class="category-title">
+                            @item.Name
+                            @item.Strength #@item.Quantity $@item.Price
+                        </a>
+                    </td>
                 </tr>
             }
-        </table>
-        <table style="width:25%; float:left">
+        }
+        @if (Model.EnteredPrescriptions.Count() == 0)
+        {
             <tr>
-                <th>Reviewed</th>
+                <td></td>
             </tr>
-                @if (Model.ReviewedPrescriptions.Count() > 0)
-                {
-                    @foreach (var item in Model.ReviewedPrescriptions)
-                    {
-                    <tr>
-                        <td>
-                            @item.Name @item.Strength #@item.Quantity $@item.Price
-                        </td>
-                    </tr>
-                }
-                }
-                @if (Model.ReviewedPrescriptions.Count() == 0)
-                {
-                    <tr>
-                        <td></td>
-                    </tr>
-                }
-            </table>
-            <table style="width:25%; float:left">
+        }
+    </table>
+    <table style="width:25%; float:left">
+        <tr>
+            <th>Reviewed</th>
+        </tr>
+        @if (Model.ReviewedPrescriptions.Count() > 0)
+        {
+            @foreach (var item in Model.ReviewedPrescriptions)
+            {
                 <tr>
-                    <th>Filled</th>
+                    <td>
+                        <a asp-controller="Prescriptions" asp-action="Details" asp-route-id="@item.PrescriptionId" class="category-title">
+                            @item.Name
+                            @item.Strength #@item.Quantity $@item.Price
+                        </a>
+                    </td>
                 </tr>
-                    @if (Model.FilledPrescriptions.Count() > 0)
-                    {
-                        @foreach (var item in Model.FilledPrescriptions)
-                        {
-                        <tr>
-                            <td>
-                                @item.Name @item.Strength #@item.Quantity $@item.Price
-                            </td>
-                        </tr>
-                    }
-                    }
-                    @if (Model.FilledPrescriptions.Count() == 0)
-                    {
-                        <tr>
-                            <td></td>
-                        </tr>
-                    }
-                </table>
-                <table style="width:25%; float:left">
-                    <tr>
-                        <th>Ready</th>
-                    </tr>
-                    @if (Model.ReadyPrescriptions.Count() > 0)
-                    {
-                        @foreach (var item in Model.ReadyPrescriptions)
-                        {
-                            <tr>
-                                <td>
-                                    @item.Name @item.Strength #@item.Quantity $@item.Price
-                                </td>
-                            </tr>
-                        }
-                    }
-                    @if (Model.ReadyPrescriptions.Count() == 0)
-                    {
-                        <tr>
-                            <td></td>
-                        </tr>
-                    }
-                </table>
+
+            }
+        }
+        @if (Model.ReviewedPrescriptions.Count() == 0)
+        {
+            <tr>
+                <td></td>
+            </tr>
+        }
+    </table>
+    <table style="width:25%; float:left">
+        <tr>
+            <th>Filled</th>
+        </tr>
+        @if (Model.FilledPrescriptions.Count() > 0)
+        {
+            @foreach (var item in Model.FilledPrescriptions)
+            {
+                <tr>
+                    <td>
+                        <a asp-controller="Prescriptions" asp-action="Details" asp-route-id="@item.PrescriptionId" class="category-title">
+                            @item.Name
+                            @item.Strength #@item.Quantity $@item.Price
+                        </a>
+                    </td>
+                </tr>
+            }
+        }
+        @if (Model.FilledPrescriptions.Count() == 0)
+        {
+            <tr>
+                <td></td>
+            </tr>
+        }
+    </table>
+    <table style="width:25%; float:left">
+        <tr>
+            <th>Ready</th>
+        </tr>
+        @if (Model.ReadyPrescriptions.Count() > 0)
+        {
+            @foreach (var item in Model.ReadyPrescriptions)
+            {
+                <tr>
+                    <td>
+                        <a asp-controller="Prescriptions" asp-action="Details" asp-route-id="@item.PrescriptionId" class="category-title">
+                            @item.Name
+                            @item.Strength #@item.Quantity $@item.Price
+                        </a>
+                    </td>
+                </tr>
+            }
+        }
+        @if (Model.ReadyPrescriptions.Count() == 0)
+        {
+            <tr>
+                <td></td>
+            </tr>
+        }
+    </table>
 </div>

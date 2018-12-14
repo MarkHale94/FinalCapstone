@@ -1,0 +1,80 @@
+﻿@model PharmaQueue.Models.PrescriptionViewModels.PrescriptionSoldViewModel
+
+@{
+    ViewData["Title"] = "Sold";
+}
+
+<h2>Sold</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Strength
+            </th>
+            <th>
+                Quantity
+            </th>
+            <th>
+                Refills
+            </th>
+            <th>
+                Price
+            </th>
+            <th>
+                Status
+            </th>
+            <th>
+                DateCreated
+            </th>
+            <th>Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Prescriptions)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Strength)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Refills)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                @if (item.StatusId <= 4 && item.IsSold == false)
+                {
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Status.QueueStatus)
+                    </td>
+                }
+                @if (item.StatusId == 4 && item.IsSold == true)
+                {
+                    <td>
+                        Sold
+                    </td>
+                }
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateCreated)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.FirstName)
+                    @Html.DisplayFor(modelItem => item.User.LastName)
+                </td>
+                <td>
+                    <a class="btn btn-xs btn-danger" asp-action="Details" asp-route-id="@item.PrescriptionId">Detials</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
