@@ -14,8 +14,10 @@
             @Html.DisplayNameFor(model => model.Prescription.User)
         </dt>
         <dd>
+            <a asp-controller="Customers" asp-action="Details" asp-route-id="@Model.Prescription.UserId">
             @Html.DisplayFor(model => model.Prescription.User.FirstName)
             @Html.DisplayFor(model => model.Prescription.User.LastName)
+            </a>
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Prescription.DateCreated)
@@ -88,5 +90,5 @@
             <input type="submit" class="btn btn-danger btn-xs" value="Sell" /> |
         </form>
     }
-    <a class="btn btn-danger btn-xs" asp-action="Index">Back to List</a>
+    <a class="btn btn-danger btn-xs" asp-controller="Home" asp-action="Index">Back to List</a>
 </div>

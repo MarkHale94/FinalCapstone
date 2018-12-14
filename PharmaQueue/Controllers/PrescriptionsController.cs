@@ -19,6 +19,11 @@ namespace PharmaQueue.Controllers
 
         private readonly UserManager<ApplicationUser> _userManager;
 
+        private bool PrescriptionExists(int id)
+        {
+            return _context.Prescription.Any(e => e.PrescriptionId == id);
+        }
+
         private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
 
         public PrescriptionsController(ApplicationDbContext context,
@@ -26,33 +31,6 @@ namespace PharmaQueue.Controllers
         {
             _userManager = userManager;
             _context = context;
-        }
-
-
-        // GET: Prescriptions
-        [Authorize]
-        public async Task<IActionResult> Index()
-        {
-            var user = await GetCurrentUserAsync();
-            if (user.UserTypeId!=1) {
-                var prescriptions = _context.Prescription
-                    .Include(p => p.User)
-                    .Include(p => p.Status)
-                    .Where(p => p.UserId == user.Id)
-                    .ToListAsync();
-                var viewModelForCustomers = new PrescriptionIndexViewModel();
-                viewModelForCustomers.Prescriptions = await prescriptions;
-                viewModelForCustomers.CurrentUserTypeId = user.UserTypeId;
-                return View(viewModelForCustomers);
-            }
-            var prescriptionsForEmployees = _context.Prescription
-                    .Include(p => p.User)
-                    .Include(p => p.Status)
-                    .ToListAsync();
-            var viewModelForEmployees = new PrescriptionIndexViewModel();
-            viewModelForEmployees.Prescriptions = await prescriptionsForEmployees;
-            viewModelForEmployees.CurrentUserTypeId = user.UserTypeId;
-            return View(viewModelForEmployees);
         }
 
         // GET: Prescriptions/Details/5
@@ -66,12 +44,12 @@ namespace PharmaQueue.Controllers
             var user = await GetCurrentUserAsync();
             if (id == null || prescription == null)
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "Home");
             }
 
             if (user.UserTypeId!=1 && user.Id != prescription.UserId)
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "Home");
             }
             var viewModel = new PrescriptionDetailViewModel();
             viewModel.Prescription = prescription;
@@ -86,7 +64,7 @@ namespace PharmaQueue.Controllers
             var user = await GetCurrentUserAsync();
             if (user.UserTypeId != 1)
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "Home");
             }
             PrescriptionCreateViewModel createViewModel = new PrescriptionCreateViewModel();
             createViewModel.UserId = this.RouteData.Values.Values.LastOrDefault().ToString();
@@ -106,7 +84,7 @@ namespace PharmaQueue.Controllers
             var customer = await _context.Users.FirstOrDefaultAsync(u => u.Id == createPrescription.UserId);
             if (user.UserTypeId != 1)
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "Home");
             }
 
             ModelState.Remove("Prescription.User");
@@ -121,11 +99,12 @@ namespace PharmaQueue.Controllers
                 createPrescription.Prescription.IsSold = false;
                 _context.Add(createPrescription.Prescription);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "Home");
             }
 
             return View(createPrescription);
         }
+
         //Delete
         [HttpPost, ActionName("Delete")]
         [Authorize]
@@ -134,7 +113,7 @@ namespace PharmaQueue.Controllers
         {
             if (id == null)
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "Home");
             }
 
             var user = await GetCurrentUserAsync();
@@ -143,12 +122,12 @@ namespace PharmaQueue.Controllers
                 .FirstOrDefaultAsync(p => p.PrescriptionId == id);
             if (user.UserTypeId != 1 || prescription.StatusId != 1 || prescription == null)
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "Home");
             }
 
             _context.Prescription.Remove(prescription);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Index", "Prescriptions");
+            return RedirectToAction("Index", "Home");
         }
 
         // GET: Prescriptions/Edit/5
@@ -168,11 +147,7 @@ namespace PharmaQueue.Controllers
                 .SingleOrDefaultAsync(p => p.PrescriptionId == id);
             if (prescription == null)
             {
-                return RedirectToAction(nameof(Index));
-            }
-            if (prescription == null)
-            {
-                return NotFound();
+                return RedirectToAction("Index", "Home");
             }
             viewModel.Prescription = prescription;
             return View(viewModel);
@@ -188,7 +163,7 @@ namespace PharmaQueue.Controllers
         {
             _context.Update(viewModel.Prescription);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", "Home");
         }
 
         // POST: Precriptions/Update/5
@@ -201,7 +176,7 @@ namespace PharmaQueue.Controllers
 
             if (id == null || user.UserTypeId!=1)
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "Home");
             }
 
             var prescriptionToUpdate = await _context.Prescription
@@ -210,12 +185,12 @@ namespace PharmaQueue.Controllers
                 .FirstOrDefaultAsync(p => p.PrescriptionId == id);
             if (prescriptionToUpdate == null)
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "Home");
             }
             prescriptionToUpdate.StatusId++;
             _context.Update(prescriptionToUpdate);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", "Home");
         }
 
         //Sell
@@ -228,7 +203,7 @@ namespace PharmaQueue.Controllers
 
             if (id == null || user.UserTypeId != 1)
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "Home");
             }
 
             var prescriptionToSell = await _context.Prescription
@@ -237,12 +212,12 @@ namespace PharmaQueue.Controllers
                 .FirstOrDefaultAsync(p => p.PrescriptionId == id);
             if (prescriptionToSell == null)
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "Home");
             }
             prescriptionToSell.IsSold=true;
             _context.Update(prescriptionToSell);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", "Home");
         }
 
         //Sold
@@ -273,10 +248,6 @@ namespace PharmaQueue.Controllers
             return View(viewModelForEmployees);
         }
 
-        private bool PrescriptionExists(int id)
-        {
-            return _context.Prescription.Any(e => e.PrescriptionId == id);
-        }
 
     }
 }

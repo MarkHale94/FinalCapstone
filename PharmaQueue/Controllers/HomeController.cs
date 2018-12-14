@@ -57,7 +57,7 @@ namespace PharmaQueue.Controllers
                 viewModel.EnteredPrescriptions = currentPrescriptions.Where(p => p.StatusId == 1).ToList();
                 viewModel.ReviewedPrescriptions = currentPrescriptions.Where(p => p.StatusId == 2).ToList();
                 viewModel.FilledPrescriptions = currentPrescriptions.Where(p => p.StatusId == 3).ToList();
-                viewModel.ReadyPrescriptions = currentPrescriptions.Where(p => p.StatusId == 4).ToList();
+                viewModel.ReadyPrescriptions = currentPrescriptions.Where(p => p.StatusId == 4 && p.IsSold == false).ToList();
                 viewModel.SoldPrescriptions = currentPrescriptions.Where(p => p.StatusId == 4 && p.IsSold == true).ToList();
                 return View(viewModel);
             }

@@ -28,13 +28,9 @@ namespace PharmaQueue.Controllers
             _userManager = userManager;
             _context = context;
         }
-        // GET: Customers
-        public ActionResult Index()
-        {
-            return View();
-        }
-
+ 
         // GET: Customers/Details/5
+        [Authorize]
         public async Task<IActionResult> Details(string id)
         {
             var user = await _context.Users
@@ -51,13 +47,6 @@ namespace PharmaQueue.Controllers
             viewModel.UserType = user.UserType;
             return View(viewModel);
         }
-
-        // GET: Customers/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
 
         // GET: Search Products
         [Authorize]
