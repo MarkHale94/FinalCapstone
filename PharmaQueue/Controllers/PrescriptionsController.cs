@@ -203,6 +203,29 @@ namespace PharmaQueue.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        //Sell
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize]
+        public async Task<IActionResult> Sell(int? id)
+        {
+            var user = await GetCurrentUserAsync();
+
+            if (id == null || user.UserTypeId != 1)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            var prescriptionToSell = await _context.Prescription
+                .Include(p => p.Status)
+                .Include(p => p.User)
+                .FirstOrDefaultAsync(p => p.PrescriptionId == id);
+            prescriptionToSell.IsSold=true;
+            _context.Update(prescriptionToSell);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
         private bool PrescriptionExists(int id)
         {
             return _context.Prescription.Any(e => e.PrescriptionId == id);

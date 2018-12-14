@@ -27,7 +27,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.Status)
             </th>
-            
             <th>
                 @Html.DisplayNameFor(model => model.DateCreated)
             </th>
@@ -52,9 +51,18 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Price)
             </td>
+            @if (item.StatusId <= 4 && item.IsSold == false)
+            {
             <td>
                 @Html.DisplayFor(modelItem => item.Status.QueueStatus)
             </td>
+            }
+            @if (item.StatusId == 4 && item.IsSold == true)
+            {
+            <td>
+                Sold
+            </td>
+            }
             <td>
                 @Html.DisplayFor(modelItem => item.DateCreated)
             </td>
