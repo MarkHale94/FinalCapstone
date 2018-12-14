@@ -1,4 +1,4 @@
-﻿@model PharmaQueue.Models.Prescription
+﻿@model PharmaQueue.Models.PrescriptionViewModels.PrescriptionDetailViewModel
 
 @{
     ViewData["Title"] = "Details";
@@ -11,77 +11,80 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.User)
+            @Html.DisplayNameFor(model => model.Prescription.User)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.User.FirstName)
-            @Html.DisplayFor(model => model.User.LastName)
+            @Html.DisplayFor(model => model.Prescription.User.FirstName)
+            @Html.DisplayFor(model => model.Prescription.User.LastName)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.DateCreated)
+            @Html.DisplayNameFor(model => model.Prescription.DateCreated)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.DateCreated)
+            @Html.DisplayFor(model => model.Prescription.DateCreated)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Status)
+            @Html.DisplayNameFor(model => model.Prescription.Status)
         </dt>
-        @if (Model.StatusId <= 4 && Model.IsSold == false)
+        @if (Model.Prescription.StatusId <= 4 && Model.Prescription.IsSold == false)
         {
             <dd>
-                @Html.DisplayFor(model => model.Status.QueueStatus)
+                @Html.DisplayFor(model => model.Prescription.Status.QueueStatus)
             </dd>
         }
-        @if (Model.StatusId == 4 && Model.IsSold == true)
+        @if (Model.Prescription.StatusId == 4 && Model.Prescription.IsSold == true)
         {
             <dd>
                 Sold
             </dd>
         }
         <dt>
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayNameFor(model => model.Prescription.Name)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Name)
+            @Html.DisplayFor(model => model.Prescription.Name)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Strength)
+            @Html.DisplayNameFor(model => model.Prescription.Strength)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Strength)
+            @Html.DisplayFor(model => model.Prescription.Strength)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Quantity)
+            @Html.DisplayNameFor(model => model.Prescription.Quantity)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Quantity)
+            @Html.DisplayFor(model => model.Prescription.Quantity)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Refills)
+            @Html.DisplayNameFor(model => model.Prescription.Refills)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Refills)
+            @Html.DisplayFor(model => model.Prescription.Refills)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Price)
+            @Html.DisplayNameFor(model => model.Prescription.Price)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Price)
+            @Html.DisplayFor(model => model.Prescription.Price)
         </dd>
 
     </dl>
 </div>
 <div>
-    <a class="btn btn-danger btn-xs" asp-action="Edit" asp-route-id="@Model.PrescriptionId">Edit</a> |
-    @if (Model.StatusId < 4)
+    @if (Model.CurrentUserTypeId == 1 && Model.Prescription.StatusId < 4 && Model.Prescription.IsSold==false)
     {
-        <form asp-controller="Prescriptions" asp-action="Update" asp-route-id="@Model.PrescriptionId">
+        <a class="btn btn-danger btn-xs" asp-action="Edit" asp-route-id="@Model.Prescription.PrescriptionId">Edit </a>
+    }
+    @if (Model.Prescription.StatusId < 4 && Model.CurrentUserTypeId == 1)
+    {
+        <form asp-controller="Prescriptions" asp-action="Update" asp-route-id="@Model.Prescription.PrescriptionId">
             <input type="submit" class="btn btn-danger btn-xs" value="Update" /> |
         </form>
     }
-    @if (Model.StatusId == 4 && Model.IsSold == false)
+    @if (Model.Prescription.StatusId == 4 && Model.Prescription.IsSold == false && Model.CurrentUserTypeId == 1)
     {
-        <form asp-controller="Prescriptions" asp-action="Sell" asp-route-id="@Model.PrescriptionId">
+        <form asp-controller="Prescriptions" asp-action="Sell" asp-route-id="@Model.Prescription.PrescriptionId">
             <input type="submit" class="btn btn-danger btn-xs" value="Sell" /> |
         </form>
     }
