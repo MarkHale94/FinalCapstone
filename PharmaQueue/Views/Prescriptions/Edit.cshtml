@@ -68,7 +68,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a class="btn btn-danger btn-xs" asp-controller="Prescriptions" asp-action="Details" asp-route-id="@Model.Prescription.PrescriptionId">Back</a>
 </div>
 
 @section Scripts {
