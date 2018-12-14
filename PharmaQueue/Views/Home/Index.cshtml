@@ -6,9 +6,12 @@
 
 <div class="container-fluid">
     <h2>Welcome to PharmaQueue!</h2>
+    @if (Model.SoldPrescriptions.Count > 0)
+    {
     <a class="btn btn-xs btn-danger" asp-controller="Prescriptions" asp-action="Sold" style="float:left">Sold</a>
     <br>
     <br>
+    }
     <table style="width:25%; float:left">
         <tr>
             <th>Entered</th>
