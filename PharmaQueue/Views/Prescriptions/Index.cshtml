@@ -63,15 +63,15 @@
                 @Html.DisplayFor(modelItem => item.User.LastName)
             </td>
             <td>
-                <a class="btn btn-sm btn-danger" asp-action="Details" asp-route-id="@item.PrescriptionId">Detials</a>
+                <a class="btn btn-xs btn-danger" asp-action="Details" asp-route-id="@item.PrescriptionId">Detials</a>
                 @if (item.StatusId != 4)
                 {
-                    <a class="btn btn-sm btn-danger" asp-action="Edit" asp-route-id="@item.PrescriptionId">Edit</a>
+                    <a class="btn btn-xs btn-danger" asp-action="Edit" asp-route-id="@item.PrescriptionId">Edit</a>
                 }
                 @if (item.StatusId == 1)
                 {
                     <form asp-controller="Prescriptions" asp-action="Delete" asp-route-id="@item.PrescriptionId">
-                        <input type="submit" class="btn btn-danger btn-sm" value="Delete" />
+                        <input type="submit" class="btn btn-danger btn-xs" value="Delete" />
                     </form>
                 }
             </td>

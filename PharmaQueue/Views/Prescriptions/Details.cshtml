@@ -66,7 +66,7 @@
     @if (Model.StatusId < 4)
     {
     <form asp-controller="Prescriptions" asp-action="Update" asp-route-id="@Model.PrescriptionId">
-        <input type="submit" class="btn btn-danger btn-sm" value="Update" />
+        <input type="submit" class="btn btn-danger btn-xs" value="Update" /> |
     </form>
     }
     <a asp-action="Index">Back to List</a>
