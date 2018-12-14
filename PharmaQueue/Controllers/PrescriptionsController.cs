@@ -166,9 +166,32 @@ namespace PharmaQueue.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        // POST: Precriptions/Update/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Update(int? id)
+        {
+            var user = await GetCurrentUserAsync();
+
+            if (id == null || user.UserTypeId!=1)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            var prescriptionToUpdate = await _context.Prescription
+                .Include( p => p.Status)
+                .Include( p => p.User)
+                .FirstOrDefaultAsync(p => p.PrescriptionId == id);
+            prescriptionToUpdate.StatusId++;
+            _context.Update(prescriptionToUpdate);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
         private bool PrescriptionExists(int id)
         {
             return _context.Prescription.Any(e => e.PrescriptionId == id);
         }
+
     }
 }
