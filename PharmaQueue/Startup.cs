@@ -13,6 +13,7 @@ using PharmaQueue.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PharmaQueue.Models;
+using PharmaQueue.Hubs;
 
 namespace PharmaQueue
 {
@@ -43,6 +44,7 @@ namespace PharmaQueue
                 .AddDefaultTokenProviders();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -70,6 +72,10 @@ namespace PharmaQueue
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+            });
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<StatusHub>("/status");
             });
         }
     }
