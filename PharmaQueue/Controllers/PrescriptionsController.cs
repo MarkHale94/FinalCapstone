@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using PharmaQueue.Data;
 using PharmaQueue.Models;
 using PharmaQueue.Models.PrescriptionViewModels;
+using PharmaQueue.Hubs;
 
 namespace PharmaQueue.Controllers
 {
@@ -178,6 +179,7 @@ namespace PharmaQueue.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
+
 
             var prescriptionToUpdate = await _context.Prescription
                 .Include( p => p.Status)

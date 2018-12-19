@@ -22,3 +22,5 @@ document.getElementById("sendButton").addEventListener("click", function (event)
     });
     event.preventDefault();
 });
+
+window.setInterval(function () { window.location.reload(); }, 10000);
