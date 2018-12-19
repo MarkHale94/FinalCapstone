@@ -5,7 +5,7 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="container-fluid">
+<div id="tableDiv" class="container-fluid">
     <h2>Welcome to PharmaQueue!</h2>
     @if (Model.UserTypeId == 1)
     {
@@ -121,6 +121,6 @@
             </tr>
         }
     </table>
+</div>
     <script src="~/lib/signalr/dist/browser/signalr.js"></script>
     <script src="~/js/status.js"></script>
-</div>
