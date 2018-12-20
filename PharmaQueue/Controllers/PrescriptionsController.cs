@@ -105,7 +105,7 @@ namespace PharmaQueue.Controllers
                 createPrescription.Prescription.IsSold = false;
                 _context.Add(createPrescription.Prescription);
                 await _context.SaveChangesAsync();
-                await _hubContext.Clients.All.SendAsync("PrescriptionUpdate");
+                await _hubContext.Clients.All.SendAsync("PrescriptionUpdate", createPrescription.UserId);
                 return RedirectToAction("Index", "Home");
             }
             return View(createPrescription);
@@ -133,7 +133,7 @@ namespace PharmaQueue.Controllers
 
             _context.Prescription.Remove(prescription);
             await _context.SaveChangesAsync();
-            await _hubContext.Clients.All.SendAsync("PrescriptionUpdate");
+            await _hubContext.Clients.All.SendAsync("PrescriptionUpdate", prescription.UserId);
             return RedirectToAction("Index", "Home");
         }
 
@@ -170,7 +170,7 @@ namespace PharmaQueue.Controllers
         {
             _context.Update(viewModel.Prescription);
             await _context.SaveChangesAsync();
-            await _hubContext.Clients.All.SendAsync("PrescriptionUpdate");
+            await _hubContext.Clients.All.SendAsync("PrescriptionUpdate", viewModel.Prescription.UserId);
             return RedirectToAction("Index", "Home");
         }
 
@@ -199,7 +199,7 @@ namespace PharmaQueue.Controllers
             prescriptionToUpdate.StatusId++;
             _context.Update(prescriptionToUpdate);
             await _context.SaveChangesAsync();
-            await _hubContext.Clients.All.SendAsync("PrescriptionUpdate");
+            await _hubContext.Clients.All.SendAsync("PrescriptionUpdate", prescriptionToUpdate.UserId);
             return RedirectToAction("Index", "Home");
         }
 
@@ -227,7 +227,7 @@ namespace PharmaQueue.Controllers
             prescriptionToSell.IsSold = true;
             _context.Update(prescriptionToSell);
             await _context.SaveChangesAsync();
-            await _hubContext.Clients.All.SendAsync("PrescriptionUpdate");
+            await _hubContext.Clients.All.SendAsync("PrescriptionUpdate", prescriptionToSell.UserId);
             return RedirectToAction("Index", "Home");
         }
 

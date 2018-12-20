@@ -4,7 +4,7 @@
 @{
     ViewData["Title"] = "Home Page";
 }
-
+<input id="hiddenId" type="hidden" value="@Model.UserId"/>
 <div id="tableDiv" class="container-fluid">
     <h2>Welcome to PharmaQueue!</h2>
     @if (Model.UserTypeId == 1)

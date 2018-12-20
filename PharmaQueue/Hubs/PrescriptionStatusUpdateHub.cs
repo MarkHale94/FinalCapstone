@@ -6,6 +6,5 @@ namespace PharmaQueue.Hubs
 {
     public class StatusHub : Hub
     {
-
     }
 }
