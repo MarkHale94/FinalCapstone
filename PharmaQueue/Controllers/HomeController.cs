@@ -39,6 +39,7 @@ namespace PharmaQueue.Controllers
                         .ToListAsync();
                 var viewModel = new HomeIndexViewModel();
                 viewModel.UserTypeId = user.UserTypeId;
+                viewModel.UserId = user.Id;
                 viewModel.EnteredPrescriptions = currentPrescriptions.Where(p=>p.StatusId == 1).ToList();
                 viewModel.ReviewedPrescriptions = currentPrescriptions.Where(p => p.StatusId == 2).ToList();
                 viewModel.FilledPrescriptions = currentPrescriptions.Where(p => p.StatusId == 3).ToList();

@@ -1,10 +1,11 @@
 ﻿@model PharmaQueue.Models.HomeViewModel.HomeIndexViewModel
 
+
 @{
     ViewData["Title"] = "Home Page";
 }
-
-<div class="container-fluid">
+<input id="hiddenId" type="hidden" value="@Model.UserId"/>
+<div id="tableDiv" class="container-fluid">
     <h2>Welcome to PharmaQueue!</h2>
     @if (Model.UserTypeId == 1)
     {
@@ -121,3 +122,5 @@
         }
     </table>
 </div>
+    <script src="~/lib/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/status.js"></script>

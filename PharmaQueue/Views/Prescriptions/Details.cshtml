@@ -15,8 +15,8 @@
         </dt>
         <dd>
             <a asp-controller="Customers" asp-action="Details" asp-route-id="@Model.Prescription.UserId">
-            @Html.DisplayFor(model => model.Prescription.User.FirstName)
-            @Html.DisplayFor(model => model.Prescription.User.LastName)
+                @Html.DisplayFor(model => model.Prescription.User.FirstName)
+                @Html.DisplayFor(model => model.Prescription.User.LastName)
             </a>
         </dd>
         <dt>
@@ -74,12 +74,10 @@
     </dl>
 </div>
 <div>
-    @if (Model.CurrentUserTypeId == 1 && Model.Prescription.StatusId < 4 && Model.Prescription.IsSold==false)
+    @if (Model.CurrentUserTypeId == 1 && Model.Prescription.StatusId < 4 && Model.Prescription.IsSold == false)
     {
         <a class="btn btn-danger btn-xs" asp-action="Edit" asp-route-id="@Model.Prescription.PrescriptionId">Edit </a>
-    }
-    @if (Model.Prescription.StatusId < 4 && Model.CurrentUserTypeId == 1)
-    {
+
         <form asp-controller="Prescriptions" asp-action="Update" asp-route-id="@Model.Prescription.PrescriptionId">
             <input type="submit" class="btn btn-danger btn-xs" value="Update" /> |
         </form>
@@ -90,5 +88,12 @@
             <input type="submit" class="btn btn-danger btn-xs" value="Sell" /> |
         </form>
     }
+    @if (Model.Prescription.StatusId ==1 && Model.CurrentUserTypeId == 1 && Model.Prescription.IsSold == false)
+    {
+        <form asp-controller="Prescriptions" asp-action="Delete" asp-route-id="@Model.Prescription.PrescriptionId">
+            <input type="submit" class="btn btn-danger btn-xs" value="Delete" /> |
+        </form>
+    }
     <a class="btn btn-danger btn-xs" asp-controller="Home" asp-action="Index">Back to List</a>
 </div>
+<script src="~/lib/signalr/dist/browser/signalr.js"></script>
