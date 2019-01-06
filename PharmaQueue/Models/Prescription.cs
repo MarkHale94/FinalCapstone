@@ -19,12 +19,16 @@ namespace PharmaQueue.Models
         public string Strength { get; set; }
 
         [Required]
+        [Range(0, int.MaxValue, ErrorMessage = "Please list the number of quantity")]
         public int Quantity { get; set; }
 
         [Required]
+        [Range(0, int.MaxValue, ErrorMessage = "Please list the number of refills")]
         public int Refills { get; set; }
 
         [Required]
+        [DisplayFormat(DataFormatString = "{0:C}")]
+        [Range(0, double.MaxValue, ErrorMessage = "Please specify the price")]
         public double Price { get; set; }
 
         [Required]

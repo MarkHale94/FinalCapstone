@@ -9,6 +9,10 @@
 <div>
     <h4>Customer</h4>
     <hr />
+    @if (Model.SoldPrescriptions.Count > 0)
+    {
+        <a class="btn btn-xs btn-info" asp-controller="Prescriptions" asp-action="Sold">Sold</a>
+    }
     <dl class="dl-horizontal">
         <dt>
             Name
@@ -26,23 +30,27 @@
 
             {
                 <dd>
-                    Medication: <a asp-controller="Prescriptions" asp-action="Details" asp-route-id="@item.PrescriptionId">@Html.DisplayFor(modelItem => item.Name)
-                    @Html.DisplayFor(modelItem => item.Strength)
+                    Medication: <a asp-controller="Prescriptions" asp-action="Details" asp-route-id="@item.PrescriptionId">
+                        @Html.DisplayFor(modelItem => item.Name)
+                        @Html.DisplayFor(modelItem => item.Strength)
                     </a>
-                    #@Html.DisplayFor(modelItem => item.Quantity)
-                    @if (item.StatusId != 4)
+                    @if (item.StatusId != 4 && Model.CurrentUserTypeId == 1)
                     {
-                        <a class="btn btn-danger btn-xs" asp-controller="Prescriptions" asp-action="Edit" asp-route-id="@item.PrescriptionId">Edit</a>
-                    }
-                    @if (item.StatusId == 1)
-                    {
-                        <form asp-controller="Prescriptions" asp-action="Delete" asp-route-id="@item.PrescriptionId">
-                            <input type="submit" class="btn btn-danger btn-xs" value="Delete" />
-                        </form>
+                        <a class="btn btn-warning btn-xs" asp-controller="Prescriptions" asp-action="Edit" asp-route-id="@item.PrescriptionId">Edit</a>
+                        @if (item.StatusId == 1)
+                        {
+                            <form asp-controller="Prescriptions" asp-action="Delete" asp-route-id="@item.PrescriptionId" style="display:inline">
+                                <input type="submit" class="btn btn-danger btn-xs" value="Delete"/>
+                            </form>
+                        }
                     }
                 </dd>
             }
         }
     </dl>
-    <a class="btn btn-danger btn-xs" asp-controller="Prescriptions" asp-action="Create" asp-route-id="@Model.UserId">Add a Prescription</a>
+    @if (Model.CurrentUserTypeId == 1)
+    {
+        <a class="btn btn-danger btn-xs" asp-controller="Prescriptions" asp-action="Create" asp-route-id="@Model.UserId">Add a Prescription</a>
+    }
+    <a class="btn btn-primary btn-xs" asp-controller="Home" asp-action="Index">Back to List</a>
 </div>

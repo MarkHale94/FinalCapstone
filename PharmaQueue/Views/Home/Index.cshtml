@@ -16,11 +16,11 @@
     }
     @if (Model.SoldPrescriptions.Count > 0)
     {
-        <a class="btn btn-xs btn-danger" asp-controller="Prescriptions" asp-action="Sold" style="float:left">Sold</a>
+        <a class="btn btn-xs btn-info" asp-controller="Prescriptions" asp-action="Sold" style="float:left">Sold</a>
         <br>
         <br>
     }
-    <table style="width:25%; float:left">
+    <table class="table-bordered" style="width:25%; float:left">
         <tr>
             <th>Entered</th>
         </tr>
@@ -32,7 +32,7 @@
                     <td>
                         <a asp-controller="Prescriptions" asp-action="Details" asp-route-id="@item.PrescriptionId" class="category-title">
                             @item.Name
-                            @item.Strength #@item.Quantity $@item.Price
+                            @item.Strength
                         </a>
                     </td>
                 </tr>
@@ -45,7 +45,7 @@
             </tr>
         }
     </table>
-    <table style="width:25%; float:left">
+    <table class="table-bordered" style="width:25%; float:left">
         <tr>
             <th>Reviewed</th>
         </tr>
@@ -57,7 +57,7 @@
                     <td>
                         <a asp-controller="Prescriptions" asp-action="Details" asp-route-id="@item.PrescriptionId" class="category-title">
                             @item.Name
-                            @item.Strength #@item.Quantity $@item.Price
+                            @item.Strength
                         </a>
                     </td>
                 </tr>
@@ -71,7 +71,7 @@
             </tr>
         }
     </table>
-    <table style="width:25%; float:left">
+    <table class="table-bordered" style="width:25%; float:left">
         <tr>
             <th>Filled</th>
         </tr>
@@ -83,7 +83,7 @@
                     <td>
                         <a asp-controller="Prescriptions" asp-action="Details" asp-route-id="@item.PrescriptionId" class="category-title">
                             @item.Name
-                            @item.Strength #@item.Quantity $@item.Price
+                            @item.Strength
                         </a>
                     </td>
                 </tr>
@@ -96,7 +96,7 @@
             </tr>
         }
     </table>
-    <table style="width:25%; float:left">
+    <table class="table-bordered" style="width:25%; float:left">
         <tr>
             <th>Ready</th>
         </tr>
@@ -108,7 +108,7 @@
                     <td>
                         <a asp-controller="Prescriptions" asp-action="Details" asp-route-id="@item.PrescriptionId" class="category-title">
                             @item.Name
-                            @item.Strength #@item.Quantity $@item.Price
+                            @item.Strength
                         </a>
                     </td>
                 </tr>

@@ -24,6 +24,10 @@ namespace PharmaQueue.Models.CustomerViewModels
 
         public UserType UserType { get; set; }
 
+        public int CurrentUserTypeId { get; set; }
+
         public virtual ICollection<Prescription> Prescriptions { get; set; }
+
+        public ICollection<Prescription> SoldPrescriptions { get; set; }
     }
 }
