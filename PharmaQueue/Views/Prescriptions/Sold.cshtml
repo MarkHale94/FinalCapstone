@@ -68,8 +68,10 @@
                     @Html.DisplayFor(modelItem => item.DateCreated)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.User.FirstName)
-                    @Html.DisplayFor(modelItem => item.User.LastName)
+                    <a asp-controller="Customers" asp-action="Details" asp-route-id="@item.UserId" class="category-title">
+                        @Html.DisplayFor(modelItem => item.User.FirstName)
+                        @item.User.LastName
+                    </a>
                 </td>
                 <td>
                     <a class="btn btn-xs btn-danger" asp-action="Details" asp-route-id="@item.PrescriptionId">Detials</a>

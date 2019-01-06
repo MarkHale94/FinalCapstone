@@ -38,13 +38,17 @@ namespace PharmaQueue.Controllers
                 .Include(u=>u.UserType)
                 .FirstOrDefaultAsync(u => u.Id  == id);
 
+            var currentUser = await GetCurrentUserAsync();
+
             CustomerDetailViewModel viewModel = new CustomerDetailViewModel();
             viewModel.UserId = user.Id;
             viewModel.FirstName = user.FirstName;
             viewModel.LastName = user.LastName;
-            viewModel.Prescriptions = user.Prescriptions;
+            viewModel.Prescriptions = user.Prescriptions.Where(p=>p.IsSold==false).ToList();
             viewModel.UserTypeId = user.UserTypeId;
             viewModel.UserType = user.UserType;
+            viewModel.CurrentUserTypeId = currentUser.UserTypeId;
+            viewModel.SoldPrescriptions = user.Prescriptions.Where(p => p.StatusId == 4 && p.IsSold == true).ToList();
             return View(viewModel);
         }
 

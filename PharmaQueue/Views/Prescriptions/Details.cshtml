@@ -11,7 +11,7 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Prescription.User)
+            Customer
         </dt>
         <dd>
             <a asp-controller="Customers" asp-action="Details" asp-route-id="@Model.Prescription.UserId">
@@ -19,27 +19,6 @@
                 @Html.DisplayFor(model => model.Prescription.User.LastName)
             </a>
         </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Prescription.DateCreated)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Prescription.DateCreated)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Prescription.Status)
-        </dt>
-        @if (Model.Prescription.StatusId <= 4 && Model.Prescription.IsSold == false)
-        {
-            <dd>
-                @Html.DisplayFor(model => model.Prescription.Status.QueueStatus)
-            </dd>
-        }
-        @if (Model.Prescription.StatusId == 4 && Model.Prescription.IsSold == true)
-        {
-            <dd>
-                Sold
-            </dd>
-        }
         <dt>
             @Html.DisplayNameFor(model => model.Prescription.Name)
         </dt>
@@ -70,30 +49,45 @@
         <dd>
             @Html.DisplayFor(model => model.Prescription.Price)
         </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Prescription.Status)
+        </dt>
+        @if (Model.Prescription.StatusId <= 4 && Model.Prescription.IsSold == false)
+        {
+            <dd>
+                @Html.DisplayFor(model => model.Prescription.Status.QueueStatus)
+            </dd>
+        }
+        @if (Model.Prescription.StatusId == 4 && Model.Prescription.IsSold == true)
+        {
+            <dd>
+                Sold
+            </dd>
+        }
 
     </dl>
 </div>
 <div>
     @if (Model.CurrentUserTypeId == 1 && Model.Prescription.StatusId < 4 && Model.Prescription.IsSold == false)
     {
-        <a class="btn btn-danger btn-xs" asp-action="Edit" asp-route-id="@Model.Prescription.PrescriptionId">Edit </a>
+        <a class="btn btn-warning btn-xs" asp-action="Edit" asp-route-id="@Model.Prescription.PrescriptionId">Edit </a>
 
         <form asp-controller="Prescriptions" asp-action="Update" asp-route-id="@Model.Prescription.PrescriptionId">
-            <input type="submit" class="btn btn-danger btn-xs" value="Update" /> |
+            <input type="submit" class="btn btn-success btn-xs" value="Update" />
         </form>
     }
     @if (Model.Prescription.StatusId == 4 && Model.Prescription.IsSold == false && Model.CurrentUserTypeId == 1)
     {
         <form asp-controller="Prescriptions" asp-action="Sell" asp-route-id="@Model.Prescription.PrescriptionId">
-            <input type="submit" class="btn btn-danger btn-xs" value="Sell" /> |
+            <input type="submit" class="btn btn-danger btn-xs" value="Sell" />
         </form>
     }
     @if (Model.Prescription.StatusId ==1 && Model.CurrentUserTypeId == 1 && Model.Prescription.IsSold == false)
     {
         <form asp-controller="Prescriptions" asp-action="Delete" asp-route-id="@Model.Prescription.PrescriptionId">
-            <input type="submit" class="btn btn-danger btn-xs" value="Delete" /> |
+            <input type="submit" class="btn btn-danger btn-xs" value="Delete" />
         </form>
     }
-    <a class="btn btn-danger btn-xs" asp-controller="Home" asp-action="Index">Back to List</a>
+    <a class="btn btn-primary btn-xs" asp-controller="Home" asp-action="Index">Back to List</a>
 </div>
 <script src="~/lib/signalr/dist/browser/signalr.js"></script>
