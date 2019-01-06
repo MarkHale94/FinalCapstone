@@ -27,10 +27,7 @@
             <th>
                 Status
             </th>
-            <th>
-                DateCreated
-            </th>
-            <th>Name</th>
+            <th>Customer</th>
         </tr>
     </thead>
     <tbody>
@@ -38,7 +35,9 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Name)
+                    <a asp-controller="Prescriptions" asp-action="Details" asp-route-id="@item.PrescriptionId" class="category-title">
+                        @item.Name
+                    </a>
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Strength)
@@ -65,19 +64,13 @@
                     </td>
                 }
                 <td>
-                    @Html.DisplayFor(modelItem => item.DateCreated)
-                </td>
-                <td>
                     <a asp-controller="Customers" asp-action="Details" asp-route-id="@item.UserId" class="category-title">
                         @Html.DisplayFor(modelItem => item.User.FirstName)
                         @item.User.LastName
                     </a>
                 </td>
-                <td>
-                    <a class="btn btn-xs btn-danger" asp-action="Details" asp-route-id="@item.PrescriptionId">Detials</a>
-                </td>
             </tr>
         }
     </tbody>
 </table>
-<a class="btn btn-danger btn-xs" asp-controller="Home" asp-action="Index">Back to List</a>
+<a class="btn btn-primary btn-xs" asp-controller="Home" asp-action="Index">Back to List</a>
