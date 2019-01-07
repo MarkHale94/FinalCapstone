@@ -20,7 +20,7 @@
         <br>
         <br>
     }
-    <table class="table-bordered" style="width:25%; float:left">
+    <table class="table-bordered" style="width:25%; float:left; border-color:black;">
         <tr>
             <th>Entered</th>
         </tr>
@@ -38,12 +38,7 @@
                 </tr>
             }
         }
-        @if (Model.EnteredPrescriptions.Count() == 0)
-        {
-            <tr>
-                <td></td>
-            </tr>
-        }
+
     </table>
     <table class="table-bordered" style="width:25%; float:left">
         <tr>
@@ -64,12 +59,7 @@
 
             }
         }
-        @if (Model.ReviewedPrescriptions.Count() == 0)
-        {
-            <tr>
-                <td></td>
-            </tr>
-        }
+
     </table>
     <table class="table-bordered" style="width:25%; float:left">
         <tr>
@@ -89,12 +79,7 @@
                 </tr>
             }
         }
-        @if (Model.FilledPrescriptions.Count() == 0)
-        {
-            <tr>
-                <td></td>
-            </tr>
-        }
+
     </table>
     <table class="table-bordered" style="width:25%; float:left">
         <tr>
@@ -114,12 +99,7 @@
                 </tr>
             }
         }
-        @if (Model.ReadyPrescriptions.Count() == 0)
-        {
-            <tr>
-                <td></td>
-            </tr>
-        }
+
     </table>
 </div>
     <script src="~/lib/signalr/dist/browser/signalr.js"></script>
