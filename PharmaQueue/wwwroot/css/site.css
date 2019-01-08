@@ -3,7 +3,7 @@ for details on configuring this project to bundle and minify static web assets. 
 body {
     padding-top: 50px;
     padding-bottom: 20px;
-    background: url('../images/capsules-close-up-drugs-161688.jpg') no-repeat fixed;
+    background: url('../images/capsules-close-up-drugs-161688.jpg') no-repeat center center fixed;
     margin: 0;
     background-size:cover;
 }
